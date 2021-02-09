@@ -1,0 +1,12 @@
+{
+  "name": "bluefire-health-api",
+  "version": "1.0.0",
+  "description": "API Restful feita em typescript para suprir as plataformas web e mobile da Bluefire Health Company",
+  "main": "index.js",
+  "repository": "https://github.com/PedroUNB/Bluefire-Health-Api",
+  "author": {
+    "name": "Pedro Oliveira",
+    "email": "pedro.oliveira.unb@gmail.com"
+  },
+  "license": "MIT"
+}
