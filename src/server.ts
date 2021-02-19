@@ -1,5 +1,7 @@
 import server from '@config/app'
+import { port, enviroment, apiUrl } from '@config/enviroments'
+import { logsFromHost } from '@config/shared/logs'
 
-server.listen(8000, () => {
-  console.log('[HOST] Server is listening')
+server.listen(port, () => {
+  logsFromHost(port, enviroment, apiUrl)
 })
