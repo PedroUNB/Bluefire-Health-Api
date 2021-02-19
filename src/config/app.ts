@@ -2,14 +2,20 @@ import cors from 'cors'
 import express, { Application } from 'express'
 import morgan from 'morgan'
 import Controllers from './routes'
+import { createServer, Server as httpServer } from 'http'
+import { Server, Socket } from 'socket.io'
 class App {
-  public express: Application
+  private express: Application
+  public server: httpServer;
+  private io: Server;
 
   constructor() {
     this.express = express()
 
     this.middlewares()
     this.routes(Controllers)
+    this.sockets()
+    this.listen()
   }
 
   private middlewares() {
@@ -18,11 +24,26 @@ class App {
     this.express.use(morgan('[:method] :remote-addr :status ":url" :response-time ms'))
   }
 
+  private sockets(): void {
+    this.server = createServer(this.express)
+    this.io = require('socket.io')(this.server)
+  }
+
   private routes(Controllers: { forEach: (arg0: (Controller: any) => void) => void; }) {
     Controllers.forEach(Controller => {
       this.express.use('/', new Controller().router)
     })
   }
+
+  private listen(): void {
+    this.io.on('connection', (socket: Socket) => {
+      console.log('[Socket] A user connected')
+
+      socket.on('disconnect', () => {
+        console.log('[Socket] A user connected')
+      })
+    })
+  }
 }
 
-export default new App().express
+export default new App().server
