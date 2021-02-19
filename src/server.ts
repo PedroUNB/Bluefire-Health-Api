@@ -1,7 +1,5 @@
-import express from 'express'
+import server from '@config/app'
 
-const app = express()
-
-app.listen(8000, () => {
+server.listen(8000, () => {
   console.log('[HOST] Server is listening')
 })
