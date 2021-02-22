@@ -6,8 +6,8 @@ import { createServer, Server as httpServer } from 'http'
 import { Server, Socket } from 'socket.io'
 class App {
   private express: Application
-  public server: httpServer;
-  private io: Server;
+  public server: httpServer
+  private io: Server
 
   constructor() {
     this.express = express()
@@ -37,7 +37,10 @@ class App {
 
   private listen(): void {
     this.io.on('connection', (socket: Socket) => {
-      console.log('[Socket] A user connected')
+      socket.on('setup', (userData) => {
+        socket.join(userData.id)
+        console.log('[Socket] A user connected')
+      })
 
       socket.on('disconnect', () => {
         console.log('[Socket] A user connected')
